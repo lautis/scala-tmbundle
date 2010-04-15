@@ -102,8 +102,53 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)^\s*
+    		        ((?:\b(protected|private|case)\b\s*)*)
+    				(object)\s+
+    				(\w+)\s*  # identifier;
+    				(?=\(*)</string>
+			<key>captures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>storage.modifier.scala</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.scala</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.type.class.scala</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\{|\;|(^\s*$)</string>
+			<key>name</key>
+			<string>meta.definition.object.scala</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#statement-remainder</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#comments</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#definition-remainder</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?x)^\s*
     		        ((?:\b(abstract|protected|private|sealed|case)\b\s*)*)
-    				(class|object|trait)\s+
+    				(class|trait)\s+
     				(\w+)\s*  # identifier;
     				(?=\(*)</string>
 			<key>captures</key>
@@ -139,27 +184,8 @@
 					<string>#comments</string>
 				</dict>
 				<dict>
-					<key>begin</key>
-					<string>\b(extends)\b\s+</string>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>storage.modifier.scala</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>(?={|=)</string>
-					<key>name</key>
-					<string>meta.definition.class.extends.scala</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#all-types</string>
-						</dict>
-					</array>
+					<key>include</key>
+					<string>#definition-remainder</string>
 				</dict>
 			</array>
 		</dict>
@@ -363,6 +389,72 @@
 				</dict>
 			</array>
 		</dict>
+		<key>definition-remainder</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(extends)\b\s+</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.modifier.scala</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?={|=)</string>
+					<key>name</key>
+					<string>meta.definition.class.extends.scala</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#all-types</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#extend-with</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>extend-with</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\b(with)\b\s+</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.modifier.scala</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?={|=)</string>
+					<key>name</key>
+					<string>meta.definition.class.extends.scala</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#all-types</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#extend-with</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
 		<key>method-remainder</key>
 		<dict>
 			<key>patterns</key>
@@ -379,6 +471,43 @@
 						<dict>
 							<key>include</key>
 							<string>#all-types</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>object-statement-remainder-error</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>\(</string>
+					<key>end</key>
+					<string>\)</string>
+					<key>name</key>
+					<string>invalid.illegal.param-list.scala</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#all-types</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#statement-remainder</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>=&gt;</string>
+							<key>name</key>
+							<string>keyword.operator.result.scala</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>\b(val|var)\b</string>
+							<key>name</key>
+							<string>storage.modifier.access-control.scala</string>
 						</dict>
 					</array>
 				</dict>
