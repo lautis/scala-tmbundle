@@ -72,25 +72,6 @@
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.function.package.scala</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>^\s*(package)\s+((\w|\.)+)_*(;|\{)*</string>
-			<key>name</key>
-			<string>meta.package.scala</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.class-fns.scala</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
 					<string>entity.name.type.import.scala</string>
 				</dict>
 			</dict>
@@ -102,7 +83,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)^\s*
-    		        ((?:\b(protected|private|case)\b\s*)*)
+    		        ((?:\b(package|protected|private|case)\b\s*)*)
     				(object)\s+
     				(\w+)\s*  # identifier;
     				(?=\(*)</string>
@@ -143,6 +124,25 @@
 					<string>#definition-remainder</string>
 				</dict>
 			</array>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.class-fns.scala</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.package.scala</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^\s*(package)\s+((\w|\.)+)_*(;|\{)*</string>
+			<key>name</key>
+			<string>meta.package.scala</string>
 		</dict>
 		<dict>
 			<key>begin</key>
