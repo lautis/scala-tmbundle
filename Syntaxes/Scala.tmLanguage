@@ -278,7 +278,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(false|null|true|Nil)\b</string>
+			<string>\b(false|null|true|Nil|None)\b</string>
 			<key>name</key>
 			<string>constant.language.scala</string>
 		</dict>
