@@ -7,7 +7,7 @@
 		<string>scala</string>
 	</array>
 	<key>foldingStartMarker</key>
-	<string>/\*\*|\{\s*$</string>
+	<string>/\*\*|\{$|\{\s*(?:[^\}]+\s+=&gt;\s*)$</string>
 	<key>foldingStopMarker</key>
 	<string>\*\*/|^\s*\}</string>
 	<key>keyEquivalent</key>
